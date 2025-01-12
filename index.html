@@ -3,24 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css">
-    <title>Order List</title>
+    <title>Screenshot Protection</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: white;
+            text-align: center;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .protected-content {
+            position: relative;
+            padding: 20px;
+            background-color: #1e1e1e;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            user-select: none;
+        }
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            z-index: 999;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">Order List</div>
-        <div class="content">
-            <div class="order-card">
-                <img src="https://via.placeholder.com/150" alt="Product Image">
-                <h3>Mobile Legends 11 Diamonds</h3>
-                <p>Quantity: 5</p>
-                <p>Price: $0.20 (0.20689981 USDT)</p>
-                <p>ID: 6024373</p>
-                <p>Batch: BM472390006515188371</p>
-                <p>Date: Jan/02/2025 01:03</p>
-                <a href="details.html" class="button">Details</a>
-            </div>
-        </div>
+    <div class="protected-content">
+        <h1>Protected Content</h1>
+        <p>You cannot screenshot or record this content!</p>
     </div>
+    <div class="overlay" id="warningOverlay">
+        Screenshot/Recording is not allowed!
+    </div>
+    <script>
+        // Detect screenshot using PrintScreen key
+        document.addEventListener("keydown", function(event) {
+            if (event.key === "PrintScreen") {
+                event.preventDefault();
+                document.getElementById("warningOverlay").style.display = "flex";
+                setTimeout(() => {
+                    document.getElementById("warningOverlay").style.display = "none";
+                }, 2000);
+            }
+        });
+
+        // Disable right-click context menu
+        document.addEventListener("contextmenu", function(event) {
+            event.preventDefault();
+            alert("Right-click is disabled!");
+        });
+
+        // Obfuscate content during screen recording (basic detection)
+        let hidden = false;
+        document.addEventListener("visibilitychange", function() {
+            if (document.hidden) {
+                document.querySelector(".protected-content").style.visibility = "hidden";
+                hidden = true;
+            } else if (hidden) {
+                document.querySelector(".protected-content").style.visibility = "visible";
+                hidden = false;
+            }
+        });
+    </script>
 </body>
 </html>
