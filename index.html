@@ -3,81 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Screenshot Protection</title>
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: #121212;
-            color: white;
-            text-align: center;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .protected-content {
-            position: relative;
-            padding: 20px;
-            background-color: #1e1e1e;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-            user-select: none;
-        }
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            display: none;
-            z-index: 999;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            font-size: 24px;
-            font-weight: bold;
-        }
-    </style>
+    <title>Game Top-Up</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="protected-content">
-        <h1>Protected Content</h1>
-        <p>You cannot screenshot or record this content!</p>
-    </div>
-    <div class="overlay" id="warningOverlay">
-        Screenshot/Recording is not allowed!
-    </div>
-    <script>
-        // Detect screenshot using PrintScreen key
-        document.addEventListener("keydown", function(event) {
-            if (event.key === "PrintScreen") {
-                event.preventDefault();
-                document.getElementById("warningOverlay").style.display = "flex";
-                setTimeout(() => {
-                    document.getElementById("warningOverlay").style.display = "none";
-                }, 2000);
-            }
-        });
+    <div class="container">
+        <h2>Game Top-Up</h2>
+        <form id="topupForm">
+            <label for="userId">User ID</label>
+            <input type="text" id="userId" name="userId" required>
 
-        // Disable right-click context menu
-        document.addEventListener("contextmenu", function(event) {
-            event.preventDefault();
-            alert("Right-click is disabled!");
-        });
+            <label for="serverId">Server ID</label>
+            <input type="text" id="serverId" name="serverId" required>
 
-        // Obfuscate content during screen recording (basic detection)
-        let hidden = false;
-        document.addEventListener("visibilitychange", function() {
-            if (document.hidden) {
-                document.querySelector(".protected-content").style.visibility = "hidden";
-                hidden = true;
-            } else if (hidden) {
-                document.querySelector(".protected-content").style.visibility = "visible";
-                hidden = false;
-            }
-        });
-    </script>
+            <label for="diamonds">Diamonds</label>
+            <select id="diamonds" name="diamonds">
+                <option value="100">100 diamonds</option>
+                <option value="500">500 diamonds</option>
+                <option value="1000">1000 diamonds</option>
+            </select>
+
+            <label for="price">Total Price</label>
+            <input type="text" id="price" name="price" readonly>
+
+            <button type="button" id="checkoutButton">Checkout</button>
+        </form>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
